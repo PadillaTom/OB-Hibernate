@@ -1,9 +1,12 @@
 package com.example.entities;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Representa la tabla ob_employees en base de datos
@@ -37,6 +40,23 @@ public class Employee implements Serializable {
 
     @Column(name = "register_date")
     private LocalDateTime registerDate;
+
+    @ElementCollection
+    private List<String> nickNames = new ArrayList<>();
+
+    @ElementCollection
+    private List<Integer> postalCodes = new ArrayList<>();
+
+    @ElementCollection
+    private Set<String> creditCards = new HashSet<>();
+
+    @ElementCollection
+    private Map<String, String> phones = new HashMap<>();
+
+    // por defecto se almacena ORDINAL (numérico).
+    // EnumType.STRING hace que se almacene como texto
+    @Enumerated(EnumType.STRING)
+    EmployeeCategory category;
 
     // constructores
     public Employee(){}
@@ -126,6 +146,46 @@ public class Employee implements Serializable {
 
     public void setRegisterDate(LocalDateTime registerDate) {
         this.registerDate = registerDate;
+    }
+
+    public List<String> getNickNames() {
+        return nickNames;
+    }
+
+    public void setNickNames(List<String> nickNames) {
+        this.nickNames = nickNames;
+    }
+
+    public List<Integer> getPostalCodes() {
+        return postalCodes;
+    }
+
+    public void setPostalCodes(List<Integer> postalCodes) {
+        this.postalCodes = postalCodes;
+    }
+
+    public Set<String> getCreditCards() {
+        return creditCards;
+    }
+
+    public void setCreditCards(Set<String> creditCards) {
+        this.creditCards = creditCards;
+    }
+
+    public Map<String, String> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Map<String, String> phones) {
+        this.phones = phones;
+    }
+
+    public EmployeeCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(EmployeeCategory category) {
+        this.category = category;
     }
 
     @Override
